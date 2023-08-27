@@ -1,25 +1,26 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { Product } from "../components";
 import {
-  BrandService,
+  BrandsService,
   CategoriesService,
   OrdersService,
   ProductsService,
 } from "../utils/functions";
 
 const Store = () => {
-  const { currentUser, isLoggedIn } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [productsToShow, setProductsToShow] = useState([]);
 
-  const { fetchBrands, getBrandByBrandId } = BrandService;
+  const { fetchBrands, getBrandByBrandId } = BrandsService;
   const { fetchCategories, getCategoryByCategoryId } = CategoriesService;
   const { fetchProducts } = ProductsService;
   const { postOrder } = OrdersService;
 
-  const getDataFromDatabase = useCallback(async () => {
+  const getDataFromDatabase = async () => {
     const brandsResponse = await fetchBrands();
     const categoriesResponse = await fetchCategories();
     const productsResponse = await fetchProducts();
@@ -58,12 +59,26 @@ const Store = () => {
       });
 
       setProducts(productsOrdered);
+      setProductsToShow(productsOrdered);
     }
-  }, []);
+  };
 
-  useEffect(() => {
-    getDataFromDatabase();
-  }, []);
+  const updateProductsToShow = () => {
+    const filteredProducts = products
+      .filter(
+        (prod) =>
+          categories.filter(
+            (category) => category.id === prod.categoryId && category.isChecked
+          ).length > 0
+      )
+      .filter(
+        (prod) =>
+          brands.filter((brand) => brand.id === prod.brandId && brand.isChecked)
+            .length > 0
+      );
+
+    setProductsToShow(filteredProducts);
+  };
 
   const updateBrandsChecked = (id) => {
     const updatedBrands = brands.map((brand) =>
@@ -71,6 +86,7 @@ const Store = () => {
     );
 
     setBrands(updatedBrands);
+    updateProductsToShow();
   };
 
   const updateCategoriesChecked = (id) => {
@@ -81,24 +97,37 @@ const Store = () => {
     );
 
     setCategories(updatedCategories);
+    updateProductsToShow();
   };
 
-  const addToCart = async(product) => {
+  const addToCart = async (product) => {
     const newOrder = {
       userId: currentUser.id,
       productId: product.id,
       quantity: 1,
-      isPaymentCompleted: false
-    }
+      isPaymentCompleted: false,
+    };
 
     const response = await postOrder(newOrder);
 
-    if(response.ok){
-      const productsUpdated = products.map(prod => prod.id === product.id ? ({ ...prod, isOrdered: true }) : prod);
+    if (response.ok) {
+      const productsUpdated = products.map((prod) =>
+        prod.id === product.id ? { ...prod, isOrdered: true } : prod
+      );
 
       setProducts(productsUpdated);
+      updateProductsToShow();
     }
-  }
+  };
+
+  useEffect(() => {
+    updateProductsToShow();
+  }, [categories, brands]);
+
+  useEffect(() => {
+    getDataFromDatabase();
+    updateProductsToShow();
+  }, []);
 
   return (
     <div>
@@ -106,6 +135,10 @@ const Store = () => {
         <div className="col-lg-3">
           <h4>
             <i className="fa fa-shopping-bag"></i> Store
+            <span className="badge bg-secondary m-2">
+              {" "}
+              {productsToShow.length}
+            </span>
           </h4>
         </div>
       </div>
@@ -122,8 +155,8 @@ const Store = () => {
                       <input
                         id={`brand${brand.id}`}
                         className="form-check-input"
-                        type="checkbox"
                         value="true"
+                        type="checkbox"
                         checked={brand.isChecked}
                         onChange={() => updateBrandsChecked(brand.id)}
                       />
@@ -149,9 +182,9 @@ const Store = () => {
                     <div className="form-check">
                       <input
                         id={`brand${category.id}`}
+                        value="true"
                         className="form-check-input"
                         type="checkbox"
-                        value="true"
                         checked={category.isChecked}
                         onChange={() => updateCategoriesChecked(category.id)}
                       />
@@ -170,7 +203,7 @@ const Store = () => {
         </div>
         <div className="col-lg-9 py-2">
           <div className="row">
-            {products.map((product) => (
+            {productsToShow.map((product) => (
               <Product
                 key={product.id}
                 product={product}

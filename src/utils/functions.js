@@ -40,7 +40,7 @@ export const CategoriesService = {
     categories.find((category) => category.id === id),
 };
 
-export const BrandService = {
+export const BrandsService = {
   fetchBrands: async () =>
     await fetch("http://localhost:9000/brands", { method: "GET" }),
   getBrandByBrandId: (brands, id) => brands.find((brand) => brand.id === id),

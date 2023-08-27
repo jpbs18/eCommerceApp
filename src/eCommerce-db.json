@@ -40,8 +40,8 @@
       "id": 1,
       "name": "Apple Iphone",
       "price": 8900,
-      "brandId": 2,
-      "categoryId": 1,
+      "brandId": 1,
+      "categoryId": 3,
       "rating": 5
     },
     {
@@ -49,7 +49,7 @@
       "name": "Apple Ipad Pro",
       "price": 12400,
       "rating": 5,
-      "brandId": 2,
+      "brandId": 1,
       "categoryId": 2
     },
     {
@@ -57,7 +57,7 @@
       "name": "Sony Camera",
       "price": 4500,
       "rating": 4,
-      "brandId": 3,
+      "brandId": 5,
       "categoryId": 2
     },
     {
@@ -65,7 +65,7 @@
       "name": "Sony 5.1 Home Theatre",
       "price": 4500,
       "rating": 4,
-      "brandId": 3,
+      "brandId": 5,
       "categoryId": 2
     },
     {
@@ -73,15 +73,15 @@
       "name": "Carrier 2 Ton Air Conditioner",
       "price": 7780,
       "rating": 3,
-      "brandId": 1,
-      "categoryId": 2
+      "brandId": 2,
+      "categoryId": 1
     },
     {
       "id": 6,
       "name": "Dell Monitor",
       "price": 880,
       "rating": 4,
-      "brandId": 4,
+      "brandId": 3,
       "categoryId": 2
     },
     {
@@ -89,16 +89,16 @@
       "name": "Sony Mobile Phone",
       "price": 4848,
       "rating": 2,
-      "brandId": 3,
-      "categoryId": 1
+      "brandId": 5,
+      "categoryId": 3
     },
     {
       "id": 8,
       "name": "Samsung Mobile Phone",
       "price": 2540,
       "rating": 2,
-      "brandId": 5,
-      "categoryId": 1
+      "brandId": 4,
+      "categoryId": 3
     }
   ],
   "orders": [
