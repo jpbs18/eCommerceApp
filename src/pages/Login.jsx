@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginControls } from "../utils/constants";
-import { UserContext } from "../context/UserContext";
+import { useAuth } from "../context/UserContext";
+import { login } from "../context/actions";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -9,7 +10,9 @@ const Login = () => {
   const [errors, setErrors] = useState({ email: [], password: [] });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const { setCurrentUser, setIsLoggedIn } = useContext(UserContext);
+  const { state, dispatch } = useAuth();
+  const myEmailRef = useRef();
+  
 
   const validate = () => {
     const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
@@ -82,9 +85,15 @@ const Login = () => {
         const json = await response.json();
 
         if (json.length > 0) {
-          setCurrentUser(json[0]);
-          setIsLoggedIn(true);
-          navigate("/dashboard");
+          dispatch(login(json[0]));
+
+          if(json[0].role === "user"){
+            navigate("/dashboard");
+          }
+          else{
+            navigate("/products");
+          }
+
         } else {
           setMessage(<span className="text-danger">Invalid Login</span>);
         }
@@ -97,6 +106,7 @@ const Login = () => {
   };
 
   useEffect(() => validate(), [credentials]);
+  useEffect(() => myEmailRef.current.focus(), []);
 
   return (
     <div className="row">
@@ -130,6 +140,7 @@ const Login = () => {
                     setCredentials({ ...credentials, email: e.target.value })
                   }
                   onBlur={(e) => handleBlur(e)}
+                  ref={myEmailRef}
                 />
                 <span className="text-danger">
                   {errors.email.length && dirty.email ? errors.email[0] : null}

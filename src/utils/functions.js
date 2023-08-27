@@ -31,6 +31,14 @@ export const ProductsService = {
 
   fetchProducts: async () =>
     await fetch(`http://localhost:9000/products`, { method: "GET" }),
+  fetchProductsBySearch: async (search) =>
+    await fetch(`http://localhost:9000/products?name_like=${search}`, {
+      method: "GET",
+    }),
+  fetchProductsBySearchAndSort: async (search, sortBy, sortOrder) =>
+    await fetch(`http://localhost:9000/products?name_like=${search}&_sort=${sortBy}&_order=${sortOrder}`, {
+      method: "GET",
+    }),
 };
 
 export const CategoriesService = {
@@ -44,4 +52,30 @@ export const BrandsService = {
   fetchBrands: async () =>
     await fetch("http://localhost:9000/brands", { method: "GET" }),
   getBrandByBrandId: (brands, id) => brands.find((brand) => brand.id === id),
+};
+
+export const SortService = {
+  getSortedArray: (array, sortBy, sortOrder) => {
+    if (!array) {
+      return array;
+    }
+
+    const result = [...array];
+
+    if (sortOrder === "ASC") {
+      result.sort(
+        (a, b) =>
+          a[sortBy].toString().toLowerCase() -
+          b[sortBy].toString().toLowerCase()
+      );
+    } else {
+      result.sort(
+        (a, b) =>
+          b[sortBy].toString().toLowerCase() -
+          a[sortBy].toString().toLowerCase()
+      );
+    }
+
+    return result;
+  }
 };

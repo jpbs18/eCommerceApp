@@ -13,7 +13,9 @@ import App from "./App";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <AuthenticationProvider>
-    <App />
-  </AuthenticationProvider>
+  <React.StrictMode>
+    <AuthenticationProvider>
+      <App />
+    </AuthenticationProvider>
+  </React.StrictMode>
 );

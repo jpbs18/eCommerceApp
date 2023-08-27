@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { useAuth } from "../context/UserContext";
+import { logout } from "../context/actions";
 
 const Navbar = () => {
-  const { currentUser, isLoggedIn, setCurrentUser, setIsLoggedIn } =
-    useContext(UserContext);
+  const { state, dispatch } = useAuth();
   const navigate = useNavigate();
+  console.log("navbar", state)
 
   const handleLogout = (e) => {
     e.preventDefault();
 
-    setCurrentUser(null);
-    setIsLoggedIn(false);
+    dispatch(logout())
     navigate("/");
   };
 
@@ -34,7 +34,7 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            {isLoggedIn && (
+            {state.isLoggedIn && state.currentUser.role === "user" ? (
               <>
                 <li className="nav-item">
                   <NavLink
@@ -57,9 +57,22 @@ const Navbar = () => {
                   </NavLink>
                 </li>
               </>
-            )}
+            ) : null}
 
-            {!isLoggedIn && (
+            {state.isLoggedIn && state.currentUser.role === "admin" ? (
+                <li className="nav-item">
+                  <NavLink
+                    activeClassName="active"
+                    className="nav-link"
+                    aria-current="page"
+                    to="/products"
+                  >
+                    <i className="fa fa-suitcase"></i> Products
+                  </NavLink>
+                </li>
+            ) : null}
+
+            {!state.isLoggedIn && (
               <li className="nav-item">
                 <NavLink
                   activeClassName="active"
@@ -72,7 +85,7 @@ const Navbar = () => {
               </li>
             )}
 
-            {!isLoggedIn && (
+            {!state.isLoggedIn && (
               <li className="nav-item">
                 <NavLink
                   activeClassName="active"
@@ -86,7 +99,7 @@ const Navbar = () => {
             )}
           </ul>
 
-          {isLoggedIn && (
+          {state.isLoggedIn && (
             <div style={{ marginRight: "100px" }}>
               <ul className="navbar-nav">
                 <li className="nav-item dropdown">
@@ -98,7 +111,7 @@ const Navbar = () => {
                     aria-expanded="false"
                   >
                     <i className="fa fa-user-circle"></i>
-                    {" " + currentUser?.fullName}
+                    {" " + state.currentUser?.fullName}
                   </NavLink>
                   <div className="dropdown-menu">
                     <NavLink

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
-import { UserContext } from "../context/UserContext";
+import React, { useEffect, useState, useCallback } from "react";
+import { useAuth } from "../context/UserContext";
 import { Order } from "../components/index";
 import { OrdersService, ProductsService } from "../utils/functions";
 
 const Dashboard = () => {
-  const { currentUser } = useContext(UserContext);
+  const { state, dispatch } = useAuth()
   const [orders, setOrders] = useState([]);
   const [showOrderDeletedAlert, setShowOrderDeletedAlert] = useState(false);
   const [showOrderPlacedAlert, setShowOrderPlacedAlert] = useState(false);
@@ -12,7 +12,7 @@ const Dashboard = () => {
   const { getProductById, fetchProducts } = ProductsService;
 
   const getDataFromDataBase = useCallback(async () => {
-    const ordersResponse = await fetchOrdersByUserId(currentUser.id);
+    const ordersResponse = await fetchOrdersByUserId(state.currentUser.id);
 
     if (ordersResponse.ok) {
       const ordersData = await ordersResponse.json();

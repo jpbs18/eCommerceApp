@@ -1,26 +1,29 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useReducer } from "react";
+import { reducer } from "./reducers";
 
 const APP_DEFAULT = {
   isLoggedIn: false,
   currentUser: null,
 };
 
-export const UserContext = createContext(APP_DEFAULT);
+export const UserContext = createContext();
 
 export const AuthenticationProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [state, dispatch] = useReducer(reducer, APP_DEFAULT);
 
   return (
-    <UserContext.Provider
-      value={{
-        currentUser,
-        setCurrentUser,
-        isLoggedIn,
-        setIsLoggedIn,
-      }}
-    >
+    <UserContext.Provider value={{ state, dispatch }}>
       {children}
     </UserContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  const context = useContext(UserContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthenticationProvider");
+  }
+
+  return context;
 };

@@ -104,34 +104,27 @@
   "orders": [
     {
       "id": 1,
-      "userId": 1,
+      "userId": 2,
       "productId": 4,
       "quantity": 5,
       "isPaymentCompleted": true
     },
     {
       "id": 1,
-      "userId": 1,
+      "userId": 2,
       "productId": 3,
       "quantity": 12,
       "isPaymentCompleted": true
     },
     {
       "id": 4,
-      "userId": 1,
+      "userId": 2,
       "productId": 6,
       "quantity": 1,
       "isPaymentCompleted": true
     },
     {
-      "id": 5,
-      "userId": 1,
-      "productId": 4,
-      "quantity": 1,
-      "isPaymentCompleted": true
-    },
-    {
-      "userId": 1,
+      "userId": 2,
       "productId": 2,
       "quantity": 1,
       "isPaymentCompleted": false,
@@ -142,12 +135,13 @@
     {
       "id": 2,
       "email": "jason@gmail.com",
-      "password": "jason123",
+      "password": "Jason123",
       "fullName": "Jason",
       "dateOfBirth": "2000-12-15",
       "gender": "male",
       "receiveNewsLetters": false,
-      "country": "UK"
+      "country": "UK",
+      "role": "user"
     },
     {
       "email": "j.p.santos21@hotmail.com",
@@ -157,7 +151,8 @@
       "gender": "male",
       "country": "Portugal",
       "receiveNewsLetters": true,
-      "id": 1
+      "id": 1,
+      "role": "admin"
     },
     {
       "email": "claudia_ines91@hotmail.com",
@@ -167,27 +162,8 @@
       "gender": "female",
       "country": "Portugal",
       "receiveNewsLetters": true,
-      "id": 3
-    },
-    {
-      "email": "rui.guedes@hotmail.com",
-      "password": "Ruiguedes91",
-      "fullName": "Rui Guedes",
-      "dateOfBirth": "1992-07-07",
-      "gender": "male",
-      "country": "Portugal",
-      "receiveNewsLetters": true,
-      "id": 4
-    },
-    {
-      "email": "tom@gmail.com",
-      "password": "Tom123456",
-      "fullName": "Tom Hanks",
-      "dateOfBirth": "1978-05-15",
-      "gender": "male",
-      "country": "USA",
-      "receiveNewsLetters": false,
-      "id": 5
+      "id": 3,
+      "role": "user"
     }
   ]
 }

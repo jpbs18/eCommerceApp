@@ -14,16 +14,17 @@ const Store = () => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [productsToShow, setProductsToShow] = useState([]);
+  const [search, setSearch] = useState("");
 
   const { fetchBrands, getBrandByBrandId } = BrandsService;
   const { fetchCategories, getCategoryByCategoryId } = CategoriesService;
-  const { fetchProducts } = ProductsService;
+  const { fetchProductsBySearch } = ProductsService;
   const { postOrder } = OrdersService;
 
   const getDataFromDatabase = async () => {
     const brandsResponse = await fetchBrands();
     const categoriesResponse = await fetchCategories();
-    const productsResponse = await fetchProducts();
+    const productsResponse = await fetchProductsBySearch(search);
 
     const brandsBody = await brandsResponse.json();
     const categoriesBody = await categoriesResponse.json();
@@ -127,7 +128,7 @@ const Store = () => {
   useEffect(() => {
     getDataFromDatabase();
     updateProductsToShow();
-  }, []);
+  }, [search]);
 
   return (
     <div>
@@ -140,6 +141,16 @@ const Store = () => {
               {productsToShow.length}
             </span>
           </h4>
+        </div>
+        <div className="col-lg-9">
+          <input
+            type="search"
+            value={search}
+            placeholder="Search"
+            autoFocus="autofocus"
+            className="form-control"
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
       </div>
 

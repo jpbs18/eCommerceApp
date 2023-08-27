@@ -34,6 +34,7 @@ const Register = () => {
     gender: "",
     country: "",
     receiveNewsLetters: false,
+    role: "user"
   });
 
   const handleInput = (e) =>
