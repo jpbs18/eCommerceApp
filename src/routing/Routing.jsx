@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Register, Login, Dashboard, PageNotFound } from "../pages/index";
+import { Register, Login, Dashboard, PageNotFound, Store } from "../pages/index";
 import { Navbar } from "../components";
 
 const Routing = () => {
@@ -11,6 +11,7 @@ const Routing = () => {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/store" element={<Store />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>

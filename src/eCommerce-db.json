@@ -2,7 +2,7 @@
   "categories": [
     {
       "id": 1,
-      "name": "Mobile"
+      "name": "Appliances"
     },
     {
       "id": 2,
@@ -10,29 +10,29 @@
     },
     {
       "id": 3,
-      "name": "Appliances"
+      "name": "Mobile"
     }
   ],
   "brands": [
     {
       "id": 1,
-      "name": "Carrier"
-    },
-    {
-      "id": 2,
       "name": "Apple"
     },
     {
-      "id": 3,
-      "name": "Sony"
+      "id": 2,
+      "name": "Carrier"
     },
     {
-      "id": 4,
+      "id": 3,
       "name": "Dell"
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "Samsung"
+    },
+    {
+      "id": 5,
+      "name": "Sony"
     }
   ],
   "products": [
@@ -115,6 +115,27 @@
       "productId": 3,
       "quantity": 12,
       "isPaymentCompleted": true
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "productId": 6,
+      "quantity": 1,
+      "isPaymentCompleted": true
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "productId": 4,
+      "quantity": 1,
+      "isPaymentCompleted": true
+    },
+    {
+      "userId": 1,
+      "productId": 2,
+      "quantity": 1,
+      "isPaymentCompleted": false,
+      "id": 6
     }
   ],
   "users": [

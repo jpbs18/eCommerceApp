@@ -16,7 +16,6 @@ const Dashboard = () => {
 
     if (ordersResponse.ok) {
       const ordersData = await ordersResponse.json();
-
       const productsResponse = await fetchProducts();
 
       if (productsResponse.ok) {
